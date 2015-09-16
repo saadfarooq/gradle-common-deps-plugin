@@ -38,6 +38,7 @@ Usage
 
    ```groovy
    // The following are the defaults, you only need to add the ones you want to change
+   // empty values means they are not included by default
    commonDeps {
        support {
            libsVersion '23.0.1`
@@ -46,6 +47,8 @@ Usage
            cardview_v7 false
            design false
        }
+       butterknife '7.0.1' // you can also specify true to use latest version
+       dagger              // 1, 2 (integers) to use latest for these majors or '<version>' (string)
    }
    ``` 
 

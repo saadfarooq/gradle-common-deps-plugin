@@ -5,18 +5,19 @@ import org.gradle.testfixtures.ProjectBuilder
 import org.junit.Test
 
 public class CommonDepsPluginTest {
+    private static final DEFAULT_DEPS = 3;
     @Test
-    public void withNoClosure_shouldAddDefaultDependencies() {
+    public void withNoSupportClosure_shouldAddDefaultDependencies() {
         def project = createProject()
         project.evaluate()
         def deps = project.getConfigurations().getByName('compile').getDependencies()
-        assert deps.size() == 2
+        assert deps.size() == DEFAULT_DEPS
         assert deps.contains(new MavenDependency('com.android.support', 'appcompat-v7', '23.0.1'))
         assert deps.contains(new MavenDependency('com.android.support', 'support-v4', '23.0.1'))
     }
 
     @Test
-    public void withClosure_shouldEnableClosureDependencies() {
+    public void withSupportClosure_shouldEnableClosureDependencies() {
         def project = createProject()
         project.commonDeps {
             support {
@@ -26,13 +27,13 @@ public class CommonDepsPluginTest {
         }
         project.evaluate()
         def deps = project.getConfigurations().getByName('compile').getDependencies()
-        assert deps.size() == 4
+        assert deps.size() == DEFAULT_DEPS + 2
         assert deps.contains(new MavenDependency('com.android.support', 'cardview-v7', '23.0.1'))
         assert deps.contains(new MavenDependency('com.android.support', 'design', '23.0.1'))
     }
 
     @Test
-    public void withClosure_shouldDisableDefaultDependencies() {
+    public void withSupportClosure_shouldDisableDefaultDependencies() {
         def project = createProject()
         project.commonDeps {
             support {
@@ -42,7 +43,68 @@ public class CommonDepsPluginTest {
         }
         project.evaluate()
         def deps = project.getConfigurations().getByName('compile').getDependencies()
-        assert deps.size() == 0
+        assert deps.size() == 1
+    }
+
+    @Test
+    public void whenDaggerSpecified_shouldAddDaggerDependency() throws Exception {
+        def project = createProject()
+        project.commonDeps {
+            dagger 2
+        }
+        project.evaluate()
+        def deps = project.getConfigurations().getByName('compile').getDependencies()
+        assert deps.size() == DEFAULT_DEPS + 1
+        assert deps.contains(new MavenDependency('com.google.dagger', 'dagger', '2.0.1'))
+
+    }
+
+    @Test
+    public void whenDaggerSpecifiedAsString_shouldAddTheSpecificDaggerVersion() throws Exception {
+        def project = createProject()
+        project.commonDeps {
+            dagger '2.2.2'
+        }
+        project.evaluate()
+        def deps = project.getConfigurations().getByName('compile').getDependencies()
+        assert deps.size() == DEFAULT_DEPS + 1
+        assert deps.contains(new MavenDependency('com.google.dagger', 'dagger', '2.2.2'))
+    }
+
+    @Test
+    public void whenButterKnifeSpecified_shouldAddButterknifeDependency() throws Exception {
+        def project = createProject()
+        project.commonDeps {
+            butterknife true
+        }
+        project.evaluate()
+        def deps = project.getConfigurations().getByName('compile').getDependencies()
+        assert deps.size() == DEFAULT_DEPS
+        assert deps.contains(new MavenDependency('com.jakewharton', 'butterknife', '7.0.1'))
+    }
+
+    @Test
+    public void whenButterKnifeVersionSpecified_shouldSpecificButterknifeDependency() throws Exception {
+        def project = createProject()
+        project.commonDeps {
+            butterknife '6.5.0'
+        }
+        project.evaluate()
+        def deps = project.getConfigurations().getByName('compile').getDependencies()
+        assert deps.size() == DEFAULT_DEPS
+        assert deps.contains(new MavenDependency('com.jakewharton', 'butterknife', '6.5.0'))
+    }
+
+    @Test
+    public void settingButterknife_false_doesNotAddButterknifeDependency() throws Exception {
+        def project = createProject()
+        project.commonDeps {
+            butterknife false
+        }
+        project.evaluate()
+        def deps = project.getConfigurations().getByName('compile').getDependencies()
+        assert deps.size() == DEFAULT_DEPS - 1
+        assert !deps.contains(new MavenDependency('com.jakewharton', 'butterknife', '6.5.0'))
     }
 
     def createProject() {
