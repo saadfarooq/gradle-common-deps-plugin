@@ -3,7 +3,9 @@ package com.github.saadfarooq
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.DependencyResolutionListener
+import org.gradle.api.artifacts.ExternalModuleDependency
 import org.gradle.api.artifacts.ResolvableDependencies
+import org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency
 
 class CommonDepsPlugin implements Plugin<Project> {
     @Override
@@ -26,8 +28,8 @@ class CommonDepsPlugin implements Plugin<Project> {
         support.getProperties().each { prop, val ->
             if (val.getClass().equals(Boolean.class) && val == true) {
                 project.logger.info "${prop}, ${val}"
-                MavenDependency dependency = new MavenDependency(group: support.DEPS_GROUP, name: prop, version: support.libsVersion)
-                project.getConfigurations().getByName("compile").getDependencies().add(project.dependencies.create(dependency.toString()))
+                project.getConfigurations().getByName("compile").getDependencies()
+                        .add(new MavenDependency(support.DEPS_GROUP, prop as String, support.libsVersion))
             }
         }
     }
