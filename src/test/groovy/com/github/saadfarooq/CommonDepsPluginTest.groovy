@@ -2,6 +2,7 @@ package com.github.saadfarooq
 
 import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
+import org.junit.Ignore
 import org.junit.Test
 
 public class CommonDepsPluginTest {
@@ -47,7 +48,8 @@ public class CommonDepsPluginTest {
     }
 
     @Test
-    public void whenDaggerSpecified_shouldAddDaggerDependency() throws Exception {
+    @Ignore("Android plugin needs to be applied for this to run but it needs SDK access")
+    public void whenDaggerSpecified_shouldAddDaggerDependency_andApplyAptPlugin() throws Exception {
         def project = createProject()
         project.commonDeps {
             dagger 2
@@ -57,9 +59,11 @@ public class CommonDepsPluginTest {
         assert deps.size() == DEFAULT_DEPS + 1
         assert deps.contains(new MavenDependency('com.google.dagger', 'dagger', '2.0.1'))
 
+        assert project.getPlugins().findPlugin('com.neenbedankt.android-apt') != null
     }
 
     @Test
+    @Ignore("Android plugin needs to be applied for this to run but it needs SDK access")
     public void whenDaggerSpecifiedAsString_shouldAddTheSpecificDaggerVersion() throws Exception {
         def project = createProject()
         project.commonDeps {
