@@ -111,6 +111,34 @@ public class CommonDepsPluginTest {
         assert !deps.contains(new MavenDependency('com.jakewharton', 'butterknife', '6.5.0'))
     }
 
+    @Test
+    void shouldAddRobolectric() throws Exception {
+        def project = createProject()
+        project.commonDeps {
+            testing {
+                robolectric '3.0-rc1'
+            }
+        }
+        project.evaluate()
+        def deps = project.getConfigurations().getByName('testCompile').getDependencies()
+        assert deps.size() == 1
+        assert deps.contains("org.robolectric:robolectric:3.0-rc1")
+    }
+
+    @Test
+    void shouldAddJunit() throws Exception {
+        def project = createProject()
+        project.commonDeps {
+            testing {
+                junit '4.11'
+            }
+        }
+        project.evaluate()
+        def deps = project.getConfigurations().getByName('testCompile').getDependencies()
+        assert deps.size() == 1
+        assert deps.contains("junit:junit:4.11")
+    }
+
     def createProject() {
         Project project = ProjectBuilder.builder().build()
         project.getPluginManager().apply 'java'

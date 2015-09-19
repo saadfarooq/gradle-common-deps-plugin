@@ -17,18 +17,15 @@ class CommonDepsPlugin implements Plugin<Project> {
         this.project = project
         CommonDepsExtension commonDeps = project.extensions.create("commonDeps", CommonDepsExtension)
         GoogleSupportDepsExtension support = project.commonDeps.extensions.create("support", GoogleSupportDepsExtension)
+        TestDepsExtension testing = project.commonDeps.extensions.create('testing', TestDepsExtension)
         logger = project.logger
         compileDeps = project.getConfigurations().getByName("compile").getDependencies()
-
-        project.afterEvaluate {
-            project.apply plugin: RetrolambdaPluginAndroid
-        }
-
         project.getGradle().addListener(new DependencyResolutionListener() {
             @Override
             void beforeResolve(ResolvableDependencies resolvableDependencies) {
                 addDep(support)
                 addOthers(commonDeps)
+                addTestDeps(testing)
                 project.getGradle().removeListener(this)
 //                addDaggerDep(commonDeps)
             }
@@ -76,12 +73,27 @@ class CommonDepsPlugin implements Plugin<Project> {
         } else if (common.picasso instanceof String) {
             compileDeps.add(new MavenDependency('com.squareup.picasso', 'picasso', (String) common.picasso))
         }
+
+        if (common.timber instanceof Boolean && common.timber == true) {
+            compileDeps.add(new MavenDependency('com.jakewharton.timber', 'timber', '3.1.0'))
+        } else if (common.timber instanceof String) {
+            compileDeps.add(new MavenDependency('com.jakewharton.timber', 'timber', (String) common.timber))
+        }
     }
 
     def addRetroLambda(CommonDepsExtension common) {
         if (common.retrolambda) {
 //            project.getPluginManager().apply(RetrolambdaPlugin.class)
-            project.apply plugin: RetrolambdaPluginAndroid
+//            project.apply plugin: RetrolambdaPluginAndroid
         }
     }
+    
+    def addTestDeps(TestDepsExtension testing) {
+        def testDeps = project.getConfigurations().getByName("testCompile").getDependencies()
+        testing.getProperties().each { prop, value ->
+            if (value instanceof String && !value.isEmpty()) {
+                testDeps.add(value)
+            }
+        }
+    } 
 }
