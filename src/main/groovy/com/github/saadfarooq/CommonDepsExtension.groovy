@@ -1,8 +1,21 @@
 package com.github.saadfarooq
 
+import com.github.saadfarooq.util.Util
+
 class CommonDepsExtension {
-    def butterknife = '7.0.1'
-    def picasso = '2.5.2'
-//    def retrolambda = false
-//    def dagger
+    String butterknife
+    String picasso
+    String timber
+
+    def butterknife(version) {
+        butterknife = Util.setDepProperty('com.jakewharton', 'butterknife', version, DefaultVersions.BUTTERKNIFE)
+    }
+
+    def picasso(version) {
+        picasso = Util.setDepProperty('com.squareup.picasso', 'picasso', version, DefaultVersions.PICASSO)
+    }
+
+    def timber(version) {
+        timber = Util.setDepProperty('com.jakewharton', 'timber', version, DefaultVersions.TIMBER)
+    }
 }

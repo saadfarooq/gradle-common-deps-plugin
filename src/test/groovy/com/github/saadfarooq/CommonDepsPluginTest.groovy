@@ -6,15 +6,12 @@ import org.junit.Ignore
 import org.junit.Test
 
 public class CommonDepsPluginTest {
-    private static final DEFAULT_DEPS = 3;
     @Test
     public void withNoSupportClosure_shouldAddDefaultDependencies() {
         def project = createProject()
         project.evaluate()
         def deps = project.getConfigurations().getByName('compile').getDependencies()
-        assert deps.size() == DEFAULT_DEPS
-        assert deps.contains(new MavenDependency('com.android.support', 'appcompat-v7', '23.0.1'))
-        assert deps.contains(new MavenDependency('com.android.support', 'support-v4', '23.0.1'))
+        assert deps.size() == 0
     }
 
     @Test
@@ -23,14 +20,14 @@ public class CommonDepsPluginTest {
         project.commonDeps {
             support {
                 design true
-                cardview_v7 true
+                cardview true
             }
         }
         project.evaluate()
         def deps = project.getConfigurations().getByName('compile').getDependencies()
-        assert deps.size() == DEFAULT_DEPS + 2
-        assert deps.contains(new MavenDependency('com.android.support', 'cardview-v7', '23.0.1'))
-        assert deps.contains(new MavenDependency('com.android.support', 'design', '23.0.1'))
+        assert deps.size() ==  2
+        assert deps.contains('com.android.support:cardview_v7:23.0.1')
+        assert deps.contains('com.android.support:design:23.0.1')
     }
 
     @Test
@@ -38,13 +35,13 @@ public class CommonDepsPluginTest {
         def project = createProject()
         project.commonDeps {
             support {
-                support_v4 false
-                appcompat_v7 false
+                support false
+                appcompat false
             }
         }
         project.evaluate()
         def deps = project.getConfigurations().getByName('compile').getDependencies()
-        assert deps.size() == 1
+        assert deps.size() == 0
     }
 
     @Test
@@ -56,8 +53,8 @@ public class CommonDepsPluginTest {
         }
         project.evaluate()
         def deps = project.getConfigurations().getByName('compile').getDependencies()
-        assert deps.size() == DEFAULT_DEPS + 1
-        assert deps.contains(new MavenDependency('com.google.dagger', 'dagger', '2.0.1'))
+        assert deps.size() ==  1
+        assert deps.contains('com.google.dagger:dagger:2.0.1')
 
         assert project.getPlugins().findPlugin('com.neenbedankt.android-apt') != null
     }
@@ -71,8 +68,8 @@ public class CommonDepsPluginTest {
         }
         project.evaluate()
         def deps = project.getConfigurations().getByName('compile').getDependencies()
-        assert deps.size() == DEFAULT_DEPS + 1
-        assert deps.contains(new MavenDependency('com.google.dagger', 'dagger', '2.2.2'))
+        assert deps.size() ==  1
+        assert deps.contains('com.google.dagger:dagger:2.2.2')
     }
 
     @Test
@@ -83,8 +80,8 @@ public class CommonDepsPluginTest {
         }
         project.evaluate()
         def deps = project.getConfigurations().getByName('compile').getDependencies()
-        assert deps.size() == DEFAULT_DEPS
-        assert deps.contains(new MavenDependency('com.jakewharton', 'butterknife', '7.0.1'))
+        assert deps.size() == 1
+        assert deps.contains('com.jakewharton:butterknife:7.0.1')
     }
 
     @Test
@@ -92,11 +89,12 @@ public class CommonDepsPluginTest {
         def project = createProject()
         project.commonDeps {
             butterknife '6.5.0'
+            picasso true
         }
         project.evaluate()
         def deps = project.getConfigurations().getByName('compile').getDependencies()
-        assert deps.size() == DEFAULT_DEPS
-        assert deps.contains(new MavenDependency('com.jakewharton', 'butterknife', '6.5.0'))
+        assert deps.size() == 1
+        assert deps.contains('com.jakewharton:butterknife:6.5.0')
     }
 
     @Test
@@ -107,8 +105,36 @@ public class CommonDepsPluginTest {
         }
         project.evaluate()
         def deps = project.getConfigurations().getByName('compile').getDependencies()
-        assert deps.size() == DEFAULT_DEPS - 1
-        assert !deps.contains(new MavenDependency('com.jakewharton', 'butterknife', '6.5.0'))
+        assert deps.size() == 0
+        assert !deps.contains('com.jakewharton:butterknife:6.5.0')
+    }
+
+    @Test
+    void shouldAddRobolectric() throws Exception {
+        def project = createProject()
+        project.commonDeps {
+            testing {
+                robolectric '3.0-rc1'
+            }
+        }
+        project.evaluate()
+        def deps = project.getConfigurations().getByName('testCompile').getDependencies()
+        assert deps.size() == 1
+        assert deps.contains("org.robolectric:robolectric:3.0-rc1")
+    }
+
+    @Test
+    void shouldAddJunit() throws Exception {
+        def project = createProject()
+        project.commonDeps {
+            testing {
+                junit true
+            }
+        }
+        project.evaluate()
+        def deps = project.getConfigurations().getByName('testCompile').getDependencies()
+        assert deps.size() == 1
+        assert deps.contains("junit:junit:4.12")
     }
 
     def createProject() {

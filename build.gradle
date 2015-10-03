@@ -13,7 +13,7 @@ buildscript {
 }
 
 group 'com.github.saadfarooq'
-version '0.0.3-SNAPSHOT'
+version '0.0.4-SNAPSHOT'
 
 apply plugin: 'groovy'
 apply plugin: 'maven-publish'
