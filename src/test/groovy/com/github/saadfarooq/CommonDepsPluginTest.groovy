@@ -89,7 +89,6 @@ public class CommonDepsPluginTest {
         def project = createProject()
         project.commonDeps {
             butterknife '6.5.0'
-            picasso true
         }
         project.evaluate()
         def deps = project.getConfigurations().getByName('compile').getDependencies()
@@ -135,6 +134,20 @@ public class CommonDepsPluginTest {
         def deps = project.getConfigurations().getByName('testCompile').getDependencies()
         assert deps.size() == 1
         assert deps.contains("junit:junit:4.12")
+    }
+
+    @Test
+    void shouldAddMockito() throws Exception {
+        def project = createProject()
+        project.commonDeps {
+            testing {
+                mockito true
+            }
+        }
+        project.evaluate()
+        def deps = project.getConfigurations().getByName('testCompile').getDependencies()
+        assert deps.size() == 1
+        assert deps.contains("org.mockito:mockito-core:1.10.19")
     }
 
     def createProject() {
