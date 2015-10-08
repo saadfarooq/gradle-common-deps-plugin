@@ -15,6 +15,7 @@ class CommonDepsPlugin implements Plugin<Project> {
         this.project = project
         CommonDepsExtension commonDeps = project.extensions.create("commonDeps", CommonDepsExtension)
         GoogleSupportDepsExtension support = project.commonDeps.extensions.create("support", GoogleSupportDepsExtension)
+        GooglePlayServicesExtension gps = project.commonDeps.extensions.create("gps", GooglePlayServicesExtension)
         TestDepsExtension testing = project.commonDeps.extensions.create('testing', TestDepsExtension)
         logger = project.logger
         compileDeps = project.getConfigurations().getByName("compile").getDependencies()
@@ -23,6 +24,7 @@ class CommonDepsPlugin implements Plugin<Project> {
             void beforeResolve(ResolvableDependencies resolvableDependencies) {
                 addDep(support)
                 addDep(commonDeps)
+                addDep(gps)
                 addTestDeps(testing)
                 project.getGradle().removeListener(this)
 //                addDaggerDep(commonDeps)
