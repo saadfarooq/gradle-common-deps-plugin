@@ -40,8 +40,8 @@ publishing {
     repositories {
         maven {
             credentials {
-                username nexusUsername
-                password nexusPassword
+                username project.hasProperty('nexusUsername') ? nexusUsername : "" // so CI builds pass
+                password project.hasProperty('nexusPassword') ? nexusPassword : ""
             }
             if (project.version.endsWith('-SNAPSHOT')) {
                 url 'https://oss.sonatype.org/content/repositories/snapshots'
