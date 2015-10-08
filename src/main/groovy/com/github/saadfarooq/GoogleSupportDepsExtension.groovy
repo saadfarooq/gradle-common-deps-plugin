@@ -12,19 +12,19 @@ class GoogleSupportDepsExtension {
     String recyclerview
     
     def support(version) {
-        support = Util.setDepProperty(DEPS_GROUP, 'support_v4', version, libsVersion)
+        support = Util.setDepProperty(DEPS_GROUP, 'support-v4', version, libsVersion)
     }
 
     def appcompat(version) {
-        appcompat = Util.setDepProperty(DEPS_GROUP, 'appcompat_v7', version, libsVersion)
+        appcompat = Util.setDepProperty(DEPS_GROUP, 'appcompat-v7', version, libsVersion)
     }
 
     def cardview(version) {
-        cardview = Util.setDepProperty(DEPS_GROUP, 'cardview_v7', version, libsVersion)
+        cardview = Util.setDepProperty(DEPS_GROUP, 'cardview-v7', version, libsVersion)
     }
 
     def recyclerview(version) {
-        recyclerview = Util.setDepProperty(DEPS_GROUP, 'recyclerview_v7', version, libsVersion)
+        recyclerview = Util.setDepProperty(DEPS_GROUP, 'recyclerview-v7', version, libsVersion)
     }
 
     def design(version) {

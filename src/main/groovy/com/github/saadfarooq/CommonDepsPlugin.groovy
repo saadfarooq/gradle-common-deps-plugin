@@ -37,7 +37,7 @@ class CommonDepsPlugin implements Plugin<Project> {
         support.getProperties().each { prop, val ->
             if (val.getClass().equals(String.class) && val ==~/.*:*:.*/) {
                 logger.info "${prop}, ${val}"
-                compileDeps.add(val)
+                compileDeps.add(project.getDependencies().create(val))
             }
         }
     }
@@ -62,7 +62,7 @@ class CommonDepsPlugin implements Plugin<Project> {
         def testDeps = project.getConfigurations().getByName("testCompile").getDependencies()
         testing.getProperties().each { prop, value ->
             if (value instanceof String && !value.isEmpty()) {
-                testDeps.add(value)
+                testDeps.add(project.getDependencies().create(value))
             }
         }
     }
