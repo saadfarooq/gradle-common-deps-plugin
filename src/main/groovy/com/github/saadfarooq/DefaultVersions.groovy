@@ -7,4 +7,5 @@ class DefaultVersions {
     static def PICASSO = '2.5.2'
     static def TIMBER = '3.1.0'
     static def SUPPORT_LIBS_VERSION = '23.0.1'
+    static def PLAY_SERVICES_LIBS_VERSION = '8.1.0'
 }
