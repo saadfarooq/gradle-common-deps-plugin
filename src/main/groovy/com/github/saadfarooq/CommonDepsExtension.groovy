@@ -16,6 +16,6 @@ class CommonDepsExtension {
     }
 
     def timber(version) {
-        timber = Util.setDepProperty('com.jakewharton', 'timber', version, DefaultVersions.TIMBER)
+        timber = Util.setDepProperty('com.jakewharton.timber', 'timber', version, DefaultVersions.TIMBER)
     }
 }

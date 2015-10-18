@@ -21,13 +21,15 @@ public class CommonDepsPluginTest {
             support {
                 design true
                 cardview true
+                pattern true
             }
         }
         project.evaluate()
         def deps = project.getConfigurations().getByName('compile').getDependencies()
-        assert deps.size() ==  2
+        assert deps.size() ==  3
         assert deps.contains(dep(project, 'com.android.support:cardview-v7:23.0.1'))
         assert deps.contains(dep(project, 'com.android.support:design:23.0.1'))
+        assert deps.contains(dep(project, 'com.android.support:pattern-v7:23.0.1'))
     }
 
     @Test
