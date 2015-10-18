@@ -1,10 +1,38 @@
 package com.github.saadfarooq
 
+import com.github.saadfarooq.util.Util
+
 class GoogleSupportDepsExtension {
     final String DEPS_GROUP = 'com.android.support'
-    String libsVersion = '23.0.1'
-    boolean support_v4 = true
-    boolean appcompat_v7 = true
-    boolean design = false
-    boolean cardview_v7 = false
+    String libsVersion = DefaultVersions.SUPPORT_LIBS_VERSION
+    String support
+    String appcompat
+    String cardview
+    String design
+    String recyclerview
+    String palette
+    
+    def support(version) {
+        support = Util.setDepProperty(DEPS_GROUP, 'support-v4', version, libsVersion)
+    }
+
+    def appcompat(version) {
+        appcompat = Util.setDepProperty(DEPS_GROUP, 'appcompat-v7', version, libsVersion)
+    }
+
+    def cardview(version) {
+        cardview = Util.setDepProperty(DEPS_GROUP, 'cardview-v7', version, libsVersion)
+    }
+
+    def recyclerview(version) {
+        recyclerview = Util.setDepProperty(DEPS_GROUP, 'recyclerview-v7', version, libsVersion)
+    }
+
+    def design(version) {
+        design = Util.setDepProperty(DEPS_GROUP, 'design', version, libsVersion)
+    }
+
+    def palette(version) {
+        palette = Util.setDepProperty(DEPS_GROUP, 'palette-v7', version, libsVersion)
+    }
 }

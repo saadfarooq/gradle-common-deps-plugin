@@ -16,7 +16,7 @@ Usage
       }
 
       dependencies {
-         classpath 'com.github.saadfarooq:gradle-common-deps-plugin:0.0.1-SNAPSHOT'
+         classpath 'com.github.saadfarooq:gradle-common-deps-plugin:0.0.4-SNAPSHOT'
       }
    }
 
@@ -30,25 +30,31 @@ Usage
    alternatively, you can use the new plugin syntax for gradle `2.1+`
    ```groovy
    plugins {
-      id "com.github.saadfarooq.commondeps" version "0.0.1"
+      id "com.github.saadfarooq.commondeps" version "0.0.4"
    }
    ```
 
-2. Define the opt-in / opt-out dependencies in the commonDeps closure
+2. Define the dependencies in the commonDeps closure
 
    ```groovy
-   // The following are the defaults, you only need to add the ones you want to change
-   // empty values means they are not included by default
+   // Enable a dependency by either specifying `true` to install the default version 
+   // or a version string to include a particular version
    commonDeps {
        support {
            libsVersion '23.0.1`
-           support_v4 true
-           appcompat_v7 true
-           cardview_v7 false
+           support true
+           appcompat true
+           cardview false
            design false
+           palette false
        }
        butterknife '7.0.1' // you can also specify true to use latest version
-       dagger              // 1, 2 (integers) to use latest for these majors or '<version>' (string)
+       picasso true
+       timber true
+       testing {
+           robolectric true
+           junit true
+       }
    }
    ``` 
 

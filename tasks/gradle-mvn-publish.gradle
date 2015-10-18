@@ -1,0 +1,97 @@
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+artifacts {
+    archives jar
+    archives javadocJar
+    archives sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+group = GROUP
+version = VERSION
+
+if (project.hasProperty('nexusUsername') && project.hasProperty('nexusPassword')) {
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                beforeDeployment { deployment -> signing.signPom(deployment) }
+
+                def repoUrl
+                if (project.version.endsWith("SNAPSHOT")) {
+                    repoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
+                } else {
+                    repoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                }
+
+                repository(url: repoUrl) {
+                    authentication(
+                            userName: project.getProperty('nexusUsername'),
+                            password: project.getProperty('nexusPassword'))
+                }
+
+                pom.project {
+                    name POM_NAME
+                    packaging POM_PACKAGING
+                    description POM_DESCRIPTION
+                    url POM_URL
+
+                    scm {
+                        url POM_SCM_URL
+                        connection POM_SCM_CONNECTION
+                        developerConnection POM_SCM_DEV_CONNECTION
+                    }
+
+                    licenses {
+                        license {
+                            name POM_LICENSE_NAME
+                            url POM_LICENSE_URL
+                            distribution POM_LICENSE_DIST
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id POM_DEVELOPER_ID
+                            name POM_DEVELOPER_NAME
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    task checkRelease << {
+        def readmeVersion = file('README.md').readLines().find { it.contains("$POM_GROUP:$POM_ARTIFACT_ID:") }?.trim()
+
+        if (readmeVersion == null) {
+            throw new ProjectConfigurationException("Missing README version string", null)
+        }
+
+        if (!readmeVersion.contains(":$version")) {
+            throw new ProjectConfigurationException("README version string: $readmeVersion must match release version: $version", null)
+        }
+
+        def changelogVersion = file('CHANGELOG.md').readLines().find { it.contains("### $version") }
+        if (changelogVersion == null) {
+            throw new ProjectConfigurationException("CHANGELOG does not contain changes for release version: $version", null)
+        }
+    }
+}
+
+task printBuildScriptClasspath << {
+    println project.buildscript.configurations.classpath.asPath
+}

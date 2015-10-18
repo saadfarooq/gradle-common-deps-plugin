@@ -1,4 +1,3 @@
-
 buildscript {
     repositories {
         mavenCentral()
@@ -8,15 +7,12 @@ buildscript {
     }
     
     dependencies {
+        // Maybe use this some day
 //        classpath "com.gradle.publish:plugin-publish-plugin:0.9.0"
     }
 }
 
-group 'com.github.saadfarooq'
-version '0.0.3-SNAPSHOT'
-
 apply plugin: 'groovy'
-apply plugin: 'maven-publish'
 
 repositories {
     mavenCentral()
@@ -25,27 +21,7 @@ repositories {
 dependencies {
     compile gradleApi()
     compile localGroovy()
-    compile 'com.neenbedankt.gradle.plugins:android-apt:1.4'
     compile 'com.android.tools.build:gradle:1.3.0'
-    compile 'me.tatarka:gradle-retrolambda:3.2.0'
 }
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
-
-    repositories {
-        maven {
-            credentials {
-                username nexusUsername
-                password nexusPassword
-            }
-            if (project.version.endsWith('-SNAPSHOT')) {
-                url 'https://oss.sonatype.org/content/repositories/snapshots'
-            }
-        }
-    }
-}
+7
+apply from: 'tasks/gradle-mvn-publish.gradle'
