@@ -46,6 +46,7 @@ Usage
            appcompat true
            cardview false
            design false
+           palette false
        }
        butterknife '7.0.1' // you can also specify true to use latest version
        picasso true
