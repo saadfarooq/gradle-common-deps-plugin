@@ -10,7 +10,7 @@ class GoogleSupportDepsExtension {
     String cardview
     String design
     String recyclerview
-    String pattern
+    String palette
     
     def support(version) {
         support = Util.setDepProperty(DEPS_GROUP, 'support-v4', version, libsVersion)
@@ -32,7 +32,7 @@ class GoogleSupportDepsExtension {
         design = Util.setDepProperty(DEPS_GROUP, 'design', version, libsVersion)
     }
 
-    def pattern(version) {
-        pattern = Util.setDepProperty(DEPS_GROUP, 'pattern-v7', version, libsVersion)
+    def palette(version) {
+        palette = Util.setDepProperty(DEPS_GROUP, 'palette-v7', version, libsVersion)
     }
 }
