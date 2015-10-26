@@ -16,7 +16,7 @@ Usage
       }
 
       dependencies {
-         classpath 'com.github.saadfarooq:gradle-common-deps-plugin:0.0.4-SNAPSHOT'
+         classpath 'com.github.saadfarooq:gradle-common-deps-plugin:{version}'
       }
    }
 

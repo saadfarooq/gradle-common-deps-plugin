@@ -1,1 +1,3 @@
 language: groovy
+install: ./gradlew clean
+script: ./gradlew test
