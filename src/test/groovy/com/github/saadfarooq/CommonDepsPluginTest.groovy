@@ -27,9 +27,9 @@ public class CommonDepsPluginTest {
         project.evaluate()
         def deps = project.getConfigurations().getByName('compile').getDependencies()
         assert deps.size() ==  3
-        assert deps.contains(dep(project, 'com.android.support:cardview-v7:23.0.1'))
-        assert deps.contains(dep(project, 'com.android.support:design:23.0.1'))
-        assert deps.contains(dep(project, 'com.android.support:palette-v7:23.0.1'))
+        assert deps.contains(dep(project, 'com.android.support:cardview-v7:23.1.0'))
+        assert deps.contains(dep(project, 'com.android.support:design:23.1.0'))
+        assert deps.contains(dep(project, 'com.android.support:palette-v7:23.1.0'))
     }
 
     @Test
@@ -98,8 +98,8 @@ public class CommonDepsPluginTest {
         project.evaluate()
         def deps = project.getConfigurations().getByName('compile').getDependencies()
         assert deps.size() == 2
-        assert deps.contains(dep(project, 'com.google.android.gms:play-services-base:8.1.0'))
-        assert deps.contains(dep(project, 'com.google.android.gms:play-services-plus:8.1.0'))
+        assert deps.contains(dep(project, 'com.google.android.gms:play-services-base:8.3.0'))
+        assert deps.contains(dep(project, 'com.google.android.gms:play-services-plus:8.3.0'))
     }
 
     @Test

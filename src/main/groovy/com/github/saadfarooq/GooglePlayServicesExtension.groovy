@@ -54,7 +54,7 @@ class GooglePlayServicesExtension {
         maps = Util.setDepProperty(DEPS_GROUP, 'play-services-maps', version, libsVersion)
     }
 
-    def nearbyrby(version) {
+    def nearby(version) {
         nearby = Util.setDepProperty(DEPS_GROUP, 'play-services-nearby', version, libsVersion)
     }
 
