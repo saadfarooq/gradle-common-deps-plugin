@@ -6,6 +6,8 @@ class CommonDepsExtension {
     String butterknife
     String picasso
     String timber
+    String glide
+    String rxandroid
 
     def butterknife(version) {
         butterknife = Util.setDepProperty('com.jakewharton', 'butterknife', version, DefaultVersions.BUTTERKNIFE)
@@ -17,5 +19,13 @@ class CommonDepsExtension {
 
     def timber(version) {
         timber = Util.setDepProperty('com.jakewharton.timber', 'timber', version, DefaultVersions.TIMBER)
+    }
+
+    def glide(version) {
+        glide = Util.setDepProperty('com.github.bumptech.glide', 'glide', version, DefaultVersions.GLIDE)
+    }
+
+    def rxandroid(version) {
+        rxandroid = Util.setDepProperty('io.reactivex', 'rxandroid', version, DefaultVersions.RXANDROID)
     }
 }

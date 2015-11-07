@@ -44,16 +44,31 @@ of dependencies as they are added.
    // or a version string to include a particular version
    commonDeps {
        support {
-           libsVersion '23.0.1`
+           libsVersion '23.1.0`
            support true
            appcompat true
            cardview false
            design false
            palette false
        }
+       gps {
+            ads true
+            analytics true
+            base true
+            cast true
+            games true
+            gcm true
+            fitness true
+            identity true
+            maps true
+            nearby true
+            panorama true
+            plus true
+       }
        butterknife '7.0.1' // you can also specify true to use latest version
        picasso true
        timber true
+       glide true
        testing {
            robolectric true
            junit true
@@ -67,23 +82,33 @@ Contributing
 ------------
 
 The library is pretty simple and contributing should be relatively easy if you follow the steps below:
+
 1. Think of a dependency you commonly use and that you think is popular enough to merit inclusion
+
 2. Determine appropriate build.gradle closure level to use for said dependency. Most dependencies will go in the 
 commonDeps top level closure. Others, such as Google support libraries go in sub-levels. Assume you decided to add `xyz`
 dependency to the commonDeps top level closure. (Follow the examples for new closure addition in `CommonDepsPlugin` if 
 you need to create new sub-closure)
+
 3. Add a method corresponding to the name you want to use in the build file. For `xyz` add a method named `xyz` that 
 takes an argument `version`. This method is called during the build process when the closure is parsed.
+
 4. Create string field corresponding to the property you want to add in the Extension object. My convention is to name 
 this the same as the method name / build property name, in our assumption `xyz`.
+
 5. Add the default version for that property to the DefaultVersions file.
+
 6. Simply call the `Util.setDepProperty` with the group name, artifact id, version argument passed to the method and
 DefaultVersion reference. e.g. `xyz = Util.setDepProperty('com.xyz', 'xyz', version, DefaultVersion.XYZ)`. This method
 add the appropriate dependency to the project depending on the argument passed.
+
 7. Following a test pattern from `CommonDepsPluginTest` to add a test for your newly added dependency.
+
 8. Add example usage in `README.md`. This is important so visitors know what dependencies are available. The gradle
 closure properties are not discoverable at this point.
+
 9. Make a PR.
+
 10. Go forth and prosper.
 
 License
