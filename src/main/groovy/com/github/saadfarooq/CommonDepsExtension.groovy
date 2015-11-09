@@ -8,6 +8,7 @@ class CommonDepsExtension {
     String timber
     String glide
     String rxandroid
+    String jodatime
 
     def butterknife(version) {
         butterknife = Util.setDepProperty('com.jakewharton', 'butterknife', version, DefaultVersions.BUTTERKNIFE)
@@ -27,5 +28,9 @@ class CommonDepsExtension {
 
     def rxandroid(version) {
         rxandroid = Util.setDepProperty('io.reactivex', 'rxandroid', version, DefaultVersions.RXANDROID)
+    }
+
+    def jodatime(version) {
+        jodatime = Util.setDepProperty('net.danlew', 'android.joda', version, DefaultVersions.JODA_TIME_ANDROID)
     }
 }
