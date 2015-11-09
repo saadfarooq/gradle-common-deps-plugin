@@ -10,4 +10,5 @@ class DefaultVersions {
     static def PLAY_SERVICES_LIBS_VERSION = '8.3.0'
     static def GLIDE = '3.6.1'
     static def RXANDROID = '1.0.1'
+    static def JODA_TIME_ANDROID = '2.9.0'
 }

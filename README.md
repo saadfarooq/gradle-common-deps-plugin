@@ -69,6 +69,7 @@ of dependencies as they are added.
        picasso true
        timber true
        glide true
+       jodatime true // installs joda-time Android
        testing {
            robolectric true
            junit true
