@@ -60,6 +60,7 @@ of dependencies as they are added.
             gcm true
             fitness true
             identity true
+            location true
             maps true
             nearby true
             panorama true
