@@ -13,6 +13,7 @@ class GooglePlayServicesExtension {
     String gcm
     String fitness
     String identity
+    String location
     String maps
     String nearby
     String panorama
@@ -48,6 +49,10 @@ class GooglePlayServicesExtension {
 
     def identity(version) {
         identity = Util.setDepProperty(DEPS_GROUP, 'play-services-identity', version, libsVersion)
+    }
+    
+    def location(version) {
+        location = Util.setDepProperty(DEPS_GROUP, 'play-services-location', version, libsVersion)
     }
 
     def maps(version) {
