@@ -16,7 +16,11 @@ class CommonDepsPlugin implements Plugin<Project> {
         CommonDepsExtension commonDeps = project.extensions.create("commonDeps", CommonDepsExtension)
         GoogleSupportDepsExtension support = project.commonDeps.extensions.create("support", GoogleSupportDepsExtension)
         GooglePlayServicesExtension gps = project.commonDeps.extensions.create("gps", GooglePlayServicesExtension)
+        RxDepsExtension rx = project.commonDeps.extensions.create('rx', RxDepsExtension)
+        RxBindingDepsExtension rxBinding = project.commonDeps.rx.extensions.create('binding', RxBindingDepsExtension)
+
         TestDepsExtension testing = project.commonDeps.extensions.create('testing', TestDepsExtension)
+        AssertJDepsExtension assertj = project.commonDeps.testing.extensions.create('assertj', AssertJDepsExtension)
         logger = project.logger
         compileDeps = project.getConfigurations().getByName("compile").getDependencies()
         project.getGradle().addListener(new DependencyResolutionListener() {
@@ -27,7 +31,6 @@ class CommonDepsPlugin implements Plugin<Project> {
                 addDep(gps)
                 addTestDeps(testing)
                 project.getGradle().removeListener(this)
-//                addDaggerDep(commonDeps)
             }
 
             @Override
@@ -44,22 +47,6 @@ class CommonDepsPlugin implements Plugin<Project> {
         }
     }
 
-//    def addOthers(CommonDepsExtension common) {
-//        common.getProperties().each { prop, val ->
-//            if (val.getClass().equals(String.class) && val ==~/.*:*:.*/) {
-//                logger.info "${prop}, ${val}"
-//                compileDeps.add(val)
-//            }
-//        }
-//    }
-
-    /*def addRetroLambda(CommonDepsExtension common) {
-        if (common.retrolambda) {
-//            project.getPluginManager().apply(RetrolambdaPlugin.class)
-//            project.apply plugin: RetrolambdaPluginAndroid
-        }
-    }*/
-
     def addTestDeps(TestDepsExtension testing) {
         def testDeps = project.getConfigurations().getByName("testCompile").getDependencies()
         testing.getProperties().each { prop, value ->
@@ -68,21 +55,4 @@ class CommonDepsPlugin implements Plugin<Project> {
             }
         }
     }
-
-    /*def addDaggerDep(CommonDepsExtension common) {
-        if (common.dagger == 1) {
-            compileDeps.add(new MavenDependency('com.squareup.dagger', 'dagger', '1.2.2'))
-            project.getConfigurations().getByName("provided").getDependencies().add(new MavenDependency('com.squareup.dagger', 'dagger-compiler', '1.2.2'))
-        } else if (common.dagger == 2) {
-            project.apply plugin: AndroidAptPlugin
-            project.getConfigurations().getByName('provided').getDependencies().add(new MavenDependency('org.glassfish', 'javax.annotation', '10.0-b28'))
-            project.getConfigurations().getByName("apt").getDependencies().add(new MavenDependency('com.google.dagger', 'dagger-compiler', '2.0.1'))
-            compileDeps.add(new MavenDependency('com.google.dagger', 'dagger', '2.0.1'))
-        } else if (common.dagger instanceof String) {
-            project.apply plugin: AndroidAptPlugin
-            project.getConfigurations().getByName("apt").getDependencies().add(new MavenDependency('com.google.dagger', 'dagger-compiler', (String) common.dagger))
-            project.getConfigurations().getByName('provided').getDependencies().add(new MavenDependency('org.glassfish', 'javax.annotation', '10.0-b28'))
-            compileDeps.add(new MavenDependency('com.google.dagger', 'dagger', (String) common.dagger))
-        }
-    }*/
 }
