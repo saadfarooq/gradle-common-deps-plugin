@@ -6,6 +6,7 @@ import lombok.ast.Default
 class RxDepsExtension {
     String android
     String location
+    String lifecycle
 
     def android(version) {
         android = Util.setDepProperty("io.reactivex", "rxandroid", version, DefaultVersions.RXANDROID)
