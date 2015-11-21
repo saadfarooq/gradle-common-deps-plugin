@@ -17,7 +17,7 @@ class CommonDepsPlugin implements Plugin<Project> {
         GoogleSupportDepsExtension support = project.commonDeps.extensions.create("support", GoogleSupportDepsExtension)
         GooglePlayServicesExtension gps = project.commonDeps.extensions.create("gps", GooglePlayServicesExtension)
         RxDepsExtension rx = project.commonDeps.extensions.create('rx', RxDepsExtension)
-//        RxBindingDepsExtension rxBinding = rx.extensions.create('binding', RxBindingDepsExtension)
+        RxBindingDepsExtension rxBinding = rx.extensions.create('binding', RxBindingDepsExtension)
 
         TestDepsExtension testing = project.commonDeps.extensions.create('testing', TestDepsExtension)
 //        AssertJDepsExtension assertj = testing.extensions.create('assertj', AssertJDepsExtension)
@@ -31,7 +31,7 @@ class CommonDepsPlugin implements Plugin<Project> {
                 addDep(commonDeps)
                 addDep(gps)
                 addDep(rx)
-//                addDep(rxBinding)
+                addDep(rxBinding)
                 addTestDeps(testing)
 //                addTestDeps(assertj)
                 project.getGradle().removeListener(this)
