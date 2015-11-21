@@ -21,6 +21,7 @@ class CommonDepsPlugin implements Plugin<Project> {
 
         TestDepsExtension testing = project.commonDeps.extensions.create('testing', TestDepsExtension)
         AssertJDepsExtension assertj = project.commonDeps.testing.extensions.create('assertj', AssertJDepsExtension)
+
         logger = project.logger
         compileDeps = project.getConfigurations().getByName("compile").getDependencies()
         project.getGradle().addListener(new DependencyResolutionListener() {
@@ -29,7 +30,10 @@ class CommonDepsPlugin implements Plugin<Project> {
                 addDep(support)
                 addDep(commonDeps)
                 addDep(gps)
+                addDep(rx)
+                addDep(rxBinding)
                 addTestDeps(testing)
+                addTestDeps(assertj)
                 project.getGradle().removeListener(this)
             }
 
@@ -47,7 +51,7 @@ class CommonDepsPlugin implements Plugin<Project> {
         }
     }
 
-    def addTestDeps(TestDepsExtension testing) {
+    def addTestDeps(testing) {
         def testDeps = project.getConfigurations().getByName("testCompile").getDependencies()
         testing.getProperties().each { prop, value ->
             if (value instanceof String && !value.isEmpty()) {
