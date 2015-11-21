@@ -171,6 +171,18 @@ public class CommonDepsPluginTest {
         assert deps.contains(dep(project, "junit:junit:4.12"))
     }
 
+    @Test
+    void shouldAddAarDeps() throws Exception {
+        def project = createProject()
+        project.commonDeps {
+            rx {
+                android true
+            }
+        }
+        def deps = project.getConfigurations().getByName('compile').getDependencies()
+        assert deps.size() == 1
+    }
+
     def dep(Project project, String depString) {
         return project.getDependencies().create(depString)
     }
