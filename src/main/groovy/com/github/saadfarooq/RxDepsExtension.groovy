@@ -1,7 +1,6 @@
 package com.github.saadfarooq
 
 import com.github.saadfarooq.util.Util
-import lombok.ast.Default
 
 class RxDepsExtension {
     String android

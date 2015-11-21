@@ -6,7 +6,6 @@ class TestDepsExtension {
     String robolectric
     String junit
     String mockito
-    String assertj
 
     def robolectric(version) {
         robolectric = Util.setDepProperty('org.robolectric', 'robolectric', version, DefaultVersions.ROBOLECTRIC)
