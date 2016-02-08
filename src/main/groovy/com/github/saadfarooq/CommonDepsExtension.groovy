@@ -7,7 +7,6 @@ class CommonDepsExtension {
     String picasso
     String timber
     String glide
-    String rxandroid
     String jodatime
 
     def butterknife(version) {
@@ -24,10 +23,6 @@ class CommonDepsExtension {
 
     def glide(version) {
         glide = Util.setDepProperty('com.github.bumptech.glide', 'glide', version, DefaultVersions.GLIDE)
-    }
-
-    def rxandroid(version) {
-        rxandroid = Util.setDepProperty('io.reactivex', 'rxandroid', version, DefaultVersions.RXANDROID)
     }
 
     def jodatime(version) {
