@@ -6,6 +6,7 @@ class RxDepsExtension {
     String android
     String location
     String lifecycle
+    String permissions
 
     def android(version) {
         android = Util.setDepProperty("io.reactivex", "rxandroid", version, DefaultVersions.RXANDROID)
@@ -19,4 +20,7 @@ class RxDepsExtension {
         lifecycle = Util.setDepProperty("com.trello", "rxlifecycler", version, DefaultVersions.RXLIFECYCLE)
     }
 
+    def permissions(version) {
+        permissions = Util.setDepProperty("com.tbruyelle.rxpermissions", "rxpermissions", version, DefaultVersions.RXPERMISSIONS)
+    }
 }

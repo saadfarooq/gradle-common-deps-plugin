@@ -176,7 +176,7 @@ public class CommonDepsPluginTest {
         def project = createProject()
         project.commonDeps {
             rx {
-                android true
+                permissions true
             }
         }
         def deps = project.getConfigurations().getByName('compile').getDependencies()

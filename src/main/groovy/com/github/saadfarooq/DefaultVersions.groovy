@@ -16,4 +16,5 @@ class DefaultVersions {
     static def RXBINDING_VERSION = '0.3.0'
     static def ASSERTJ_LIBS_VERSION = '1.1.1'
     static def RXLIFECYCLE = '0.3.0'
+    static def RXPERMISSIONS = '0.4.2@aar'
 }
