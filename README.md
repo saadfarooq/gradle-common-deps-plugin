@@ -1,3 +1,5 @@
+**Archived:** Use [refreshVersions](https://github.com/jmfayard/refreshVersions/) instead.
+
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-gradle--common--deps--plugin-green.svg?style=flat)](https://android-arsenal.com/details/1/2680)
 
 Gradle Common Dependencies Plugin
